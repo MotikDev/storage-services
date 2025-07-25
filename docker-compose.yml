@@ -1,0 +1,61 @@
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - dev_network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - dev_network
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5673:5673"
+      - "15673:15673"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - dev_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - dev_network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - dev_network
+
+volumes:
+  mysql_data:
+  mongo_data:
+  redis_data:
+  rabbitmq_data:
+
+networks:
+  dev_network:
+    driver: bridge
