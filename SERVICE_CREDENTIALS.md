@@ -1,6 +1,6 @@
 # Service Credentials Documentation
 
-This document lists the credentials required to connect to services defined in `docker-compose.yml`.
+This document lists the credentials required to connect to services defined in `docker-compose.yml`, including Laravel .env configuration.
 
 ## Services
 
