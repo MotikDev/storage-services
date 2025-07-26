@@ -1,5 +1,6 @@
 services:
   mysql:
+    container_name: mysql
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -7,10 +8,16 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      # - ./db/travel_booking.sql/:/docker-entrypoint-initdb.d/travel_booking.sql:ro
+      # - ./db/travel_payment.sql/:/docker-entrypoint-initdb.d/travel_payment.sql:ro
+      # - ./db/travel_product.sql/:/docker-entrypoint-initdb.d/travel_product.sql:ro
+      # - ./db/travel_user.sql/:/docker-entrypoint-initdb.d/travel_user.sql:ro
+      # - ./db/create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
     networks:
       - dev_network
 
   redis:
+    container_name: redis
     image: redis:latest
     ports:
       - "6379:6379"
@@ -20,6 +27,7 @@ services:
       - dev_network
 
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:management
     ports:
       - "5673:5673"
@@ -30,6 +38,7 @@ services:
       - dev_network
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
@@ -42,6 +51,7 @@ services:
       - dev_network
 
   mongodb:
+    container_name: mongodb
     image: mongo:latest
     ports:
       - "27017:27017"
@@ -58,4 +68,5 @@ volumes:
 
 networks:
   dev_network:
+    name: dev_network
     driver: bridge
