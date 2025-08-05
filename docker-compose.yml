@@ -3,15 +3,13 @@ services:
     container_name: mysql
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      # - ./db/travel_booking.sql/:/docker-entrypoint-initdb.d/travel_booking.sql:ro
-      # - ./db/travel_payment.sql/:/docker-entrypoint-initdb.d/travel_payment.sql:ro
-      # - ./db/travel_product.sql/:/docker-entrypoint-initdb.d/travel_product.sql:ro
-      # - ./db/travel_user.sql/:/docker-entrypoint-initdb.d/travel_user.sql:ro
+      # import database
+      # - ./db/file.sql/:/docker-entrypoint-initdb.d/file.sql:ro
       # - ./db/create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
     networks:
       - dev_network
@@ -20,7 +18,7 @@ services:
     container_name: redis
     image: redis:latest
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     volumes:
       - redis_data:/data
     networks:
@@ -31,11 +29,11 @@ services:
     # hostname: rabbitmq-host
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_MGMT_PORT}:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_LOGIN}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
@@ -48,7 +46,7 @@ services:
       PMA_HOST: mysql
       PMA_PORT: 3306
     ports:
-      - "8080:80"
+      - "${PHPMYADMIN_PORT}:80"
     depends_on:
       - mysql
     networks:
@@ -59,7 +57,7 @@ services:
     image: redislabs/redisinsight:latest
     # image: redis/redisinsight:2.42.0
     ports:
-      - "5540:5540"
+      - "${REDISINSIGHT_PORT}:5540"
     # volumes:
     #   - redisinsight_data:/data
     networks:
