@@ -10,11 +10,14 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       # import database
-      - ./db/travel_booking.sql/:/docker-entrypoint-initdb.d/travel_booking.sql:ro
-      - ./db/travel_payment.sql/:/docker-entrypoint-initdb.d/travel_payment.sql:ro
-      - ./db/travel_product.sql/:/docker-entrypoint-initdb.d/travel_product.sql:ro
-      - ./db/travel_user.sql/:/docker-entrypoint-initdb.d/travel_user.sql:ro
+      # - ./db/travel_booking.sql/:/docker-entrypoint-initdb.d/travel_booking.sql:ro
+      # - ./db/travel_payment.sql/:/docker-entrypoint-initdb.d/travel_payment.sql:ro
+      # - ./db/travel_product.sql/:/docker-entrypoint-initdb.d/travel_product.sql:ro
+      # - ./db/travel_user.sql/:/docker-entrypoint-initdb.d/travel_user.sql:ro
       # - ./db/create-databases.sql:/docker-entrypoint-initdb.d/create-databases.sql
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     networks:
       - dev_network
 
@@ -59,6 +62,9 @@ services:
       - "${PHPMYADMIN_PORT}:80"
     depends_on:
       - mysql
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     networks:
       - dev_network
 
