@@ -52,21 +52,21 @@ services:
       - 8.8.8.8
       - 8.8.4.4
 
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    ports:
-      - "${PHPMYADMIN_PORT}:80"
-    depends_on:
-      - mysql
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
-    networks:
-      - dev_network
+  # phpmyadmin:
+  #   container_name: phpmyadmin
+  #   image: phpmyadmin/phpmyadmin
+  #   environment:
+  #     PMA_HOST: mysql
+  #     PMA_PORT: 3306
+  #   ports:
+  #     - "${PHPMYADMIN_PORT}:80"
+  #   depends_on:
+  #     - mysql
+  #   dns:
+  #     - 8.8.8.8
+  #     - 8.8.4.4
+  #   networks:
+  #     - dev_network
 
   # redisinsight:
   #   container_name: redisinsight
